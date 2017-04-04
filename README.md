@@ -12,3 +12,4 @@ Make sure the smartphone settings is with high precision GPS enabled. Don't mini
 ## Built With
 
 * [Cordova](https://cordova.apache.org/) - The mobile framework used
+* [Searchlight](http://wancharle.github.io/sl/) - The framework used for map organization and visualization
