@@ -12,5 +12,3 @@ Make sure the smartphone settings is with high precision GPS enabled. Don't mini
 ## Built With
 
 * [Cordova](https://cordova.apache.org/) - The mobile framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
