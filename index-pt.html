@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.css" />
+    <link rel="stylesheet" type="text/css" href="css/jquery.bxslider.css" />
+    <title>Trilhei</title>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDD353fOPh-KBUQ-2ekPCg75uxXRn0D9Tk&sensor=false"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/json2.js"></script>
+    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript">
+      var deviceReadyDeferred = $.Deferred();
+      var jqmReadyDeferred = $.Deferred();
+
+      document.addEventListener("deviceReady", deviceReady, false);
+
+      function deviceReady() {
+        deviceReadyDeferred.resolve();
+      }
+
+      $(document).one("mobileinit", function () {
+        jqmReadyDeferred.resolve();
+      });
+
+    </script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="js/slsapi.js"></script>
+    <script type="text/javascript" src="js/exercisetracker.js"></script>
+    <script type="text/javascript">language = 1;</script>
+    <script type="text/javascript" src="js/jquery.mobile-1.4.5.js"></script>
+    <script type="text/javascript" src="js/jquery.bxslider.js"></script>
+    
+    <script type="text/javascript">
+        app.initialize();
+    </script>
+  </head>
+  <body>
+
+<!-- Start of Trackwork Out page -->
+    <div data-role="page" id="startTracking" class="ui-page-theme-b bg-white">
+
+      <div data-role="header" class="ui-bar-b">
+        
+        <div data-role="navbar">
+          <ul>
+            <li><a href="#home" data-transition="none" data-icon="info">Informações</a></li>
+            <li><a href="#startTracking" class="chosen-aba" data-transition="none" data-icon="plus">Trajeto</a></li>
+            <li><a href="#history" data-transition="none" data-icon="star">Histórico</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div data-role="content" class="ui-body-a"> 
+        <p id="startTracking_status"></p>
+        <p id="startTracking_warning"></p>
+        <div data-role="fieldcontain" class="ui-hide-label">
+          <label for="track_id">Nome do trajeto:</label>
+          <input type="text" name="track_id" id="track_id" placeholder="Nome do trajeto"/>
+        </div>
+
+        <a id="btnIniciar" type="button" class="ui-btn ui-shadow" onclick="startTrack()">Iniciar Trajeto</a>
+        <a id="btnFoto" type="button" class="ui-btn ui-shadow margin-button" href="#comment" onclick="capturePhoto()">Capturar Foto</a> 
+        <a id="btnVideo" type="button" class="ui-btn ui-shadow margin-button" href="#comment" onclick="captureVideo()">Gravar Vídeo</a> 
+        <a id="btnAudio" type="button" class="ui-btn ui-shadow margin-button" href="#comment" onclick="captureAudio()">Gravar Áudio</a>
+        <a id="btnParar" type="button" class="ui-btn ui-shadow margin-button" onclick="stopTrack()">Finalizar Trajeto</a>
+        <p id="startTracking_info"></p>
+      </div>
+
+    </div>
+    <!-- /page -->
+
+    <!-- Home page -->
+    <div data-role="page" id="home" class="ui-page-theme-b bg-white">
+
+      <div data-role="header" class="ui-bar-b">
+          
+        <div data-role="navbar">
+          <ul>
+            <li><a href="#home" class="chosen-aba" data-transition="none" data-icon="info">Informações</a></li>
+            <li><a href="#startTracking" data-transition="none" data-icon="plus">Trajeto</a></li>
+            <li><a href="#history" data-transition="none" data-icon="star">Histórico</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div data-role="content" class="ui-body-a">
+        <p>Certifique-se de que o aparelho está com GPS ativado com alta precisão.</p>
+        Como usar:
+        <ul>
+          <li>Nomeie seu trajeto e clique em "Iniciar Trajeto"</li>
+          <li>Se quiser adicionar mídia, clique no botão que você quiser para adicionar foto, vídeo ou áudio e então insira seu comentário</li>
+          <li>Finalize o seu trajeto</li>
+          <li>Entre na página Histórico e escolha o trajeto para visualizá-lo</li>
+        </ul>
+        Mudar idioma:
+        <a id="btnPortuguese" type="button" class="ui-btn ui-shadow" onclick="language_port()">Português</a>
+        <a id="btnEnglish" type="button" class="ui-btn ui-shadow" onclick="language_eng()">Inglês</a>
+        <a href="https://sites.google.com/view/trilhei">Política de Privacidade</a>
+      </div>
+    </div>
+    <!-- End of Home page -->
+
+    <!-- Start of the History page -->
+    <div data-role="page" id="history" class="ui-page-theme-b bg-white">
+
+      <div data-role="header" class="ui-bar-b">
+          <div data-role="navbar">
+            <ul>
+              <li><a href="#home" data-transition="none" data-icon="info">Informações</a></li>
+              <li><a href="#startTracking" data-transition="none" data-icon="plus">Trajeto</a></li>
+              <li><a href="#history" class="chosen-aba" data-transition="none" data-icon="star">Histórico</a></li>
+            </ul>
+          </div>
+      </div>
+      <div data-role="content" class="ui-body-a"> 
+          <p id="tracks_recorded"></p>
+          <ul data-role="listview" id="history_tracklist">
+          </ul>
+      </div>
+    </div>
+    <!-- /page -->
+
+    <!-- Track Info page -->
+    <div data-role="page" id="track_info" class="ui-page-theme-b bg-white">
+      <div data-role="header">
+        <div id="track_name" class="track-name"></div>
+      </div>
+      <div data-role="content" class="ui-body-a"> 
+        <p id="track_info_info" class="track-info"></p>
+        <a id="sendTrack" data-inline="true" type="button" class="ui-btn ui-shadow ui-mini send-track" onclick="TrySend()">Enviar trajeto</a>
+        <div id="map_canvas" class="map-canvas"></div>
+      </div>
+    </div>
+    <!-- /page -->
+
+    <!-- Comment page -->
+    <div data-role="page" id="comment" class="ui-page-theme-b bg-white">
+
+      <div data-role="content" class="ui-body-a">
+        <div data-role="fieldcontain" class="ui-hide-label">
+          <label for="save_comment">Comentário:</label>
+          <input type="text" name="save_comment" id="save_comment" placeholder="Comentário"/>
+        </div>
+        <p id="media_file"></p>
+        <a id="btnComment" type="button" class="ui-btn ui-shadow" href="#startTracking" onclick="saveComment()">Salvar</a> 
+      </div>
+    </div>
+    <!-- End of Comment page -->      
+  </body>
+</html>
